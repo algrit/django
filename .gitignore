@@ -1,2 +1,4 @@
 db.sqlite3
 /feedback/migrations
+/feedback/__pycache__
+/form_project/__pycache__
