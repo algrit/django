@@ -3,8 +3,6 @@ from django.core import validators
 
 
 class Feedback(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, validators=[validators.MinLengthValidator(2)])
     rating = models.PositiveIntegerField(validators=[validators.MaxValueValidator(10)])
-    comment = models.TextField()
-
-
+    comment = models.TextField(validators=[validators.MinLengthValidator(1)])
