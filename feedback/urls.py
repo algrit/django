@@ -3,5 +3,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('feedbacks/done/', views.done),
     path('feedbacks/', views.feedback),
 ]
