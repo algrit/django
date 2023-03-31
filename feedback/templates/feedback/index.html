@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %} Feedback {% endblock %}
+
+
+{% block content %}
+<h2>Leave your feedback</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-style">
+        {% for field in form %}
+        {{ field.label_tag }}
+        {{ field.errors }}
+        {{ field }}
+        <br>
+        {% endfor %}
+    </div>
+
+    <button>Send</button>
+    <button type="reset">Reset</button>
+</form>
+
+<form>
+    <div class="form-style">
+        <a href="{% url 'upload_img' %}">Upload Image</a>
+    </div>
+</form>
+{% endblock %}

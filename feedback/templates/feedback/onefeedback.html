@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Feedback {% endblock %}
+
+
+{% block content %}
+
+<h2>Feedback #</h2>
+<form>ID: {{feedback.id}}<br>
+        Name: {{feedback.name}}<br>
+        Surname: {{feedback.surname}}<br>
+        Feedback: {{feedback.feedback}}<br>
+        Rating: {{feedback.rating}}</form>
+
+
+{% endblock %}
