@@ -1,7 +1,5 @@
-from django.shortcuts import render
 from .forms import FeedbackForm
 from .models import Feedback
-from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, FormView, CreateView, UpdateView, DetailView, ListView
 from django.db.models import Q, F
 
