@@ -3,7 +3,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('feedbacks/done/', views.done),
-    path('feedbacks/<int:id_feedback>/', views.feedback_update),
-    path('feedbacks/', views.feedback),
+    path('feedbacks/done/', views.DoneView.as_view()),
+    path('feedbacks/all/', views.FeedbackListView.as_view()),
+    path('feedbacks/change/<int:pk>/', views.FeedbackUpdateView.as_view()),
+    path('feedbacks/<int:pk>/', views.FeedbackDetailView.as_view()),
+    path('feedbacks/', views.FeedbackCreateView.as_view()),
 ]

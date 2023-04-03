@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} Feedback {% endblock %}
+
+
+{% block content %}
+<h2>Feedback</h2>
+
+<div class="form-style">
+    <form>Username: {{object.name}}
+        <br>
+        Rating: {{object.rating}}
+        <br>
+        Feedback: {{object.comment}}</form>
+</div>
+
+
+
+{% endblock %}
