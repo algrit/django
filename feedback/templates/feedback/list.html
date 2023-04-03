@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} All Feedbacks {% endblock %}
+
+
+{% block content %}
+<h2>All feedbacks</h2>
+
+
+    {% for feedback in object_list %}
+<form>
+    Username: {{feedback.name|title}} <br>
+    Rating: {{feedback.rating}}<br>
+    Comment: {{feedback.comment}}
+</form>
+    {% endfor %}
+
+
+{% endblock %}

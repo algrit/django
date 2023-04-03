@@ -1,78 +1,54 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
 from .forms import FeedbackForm
 from .models import Feedback
-from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView, FormView, UpdateView
+from django.views.generic import TemplateView, FormView, CreateView, UpdateView, DetailView, ListView
+from django.db.models import Q, F
 
 
-# class FeedbackView(View):
-#     def get(self, request):
-#         form = FeedbackForm()
-#         return render(request, 'feedback/index.html', {'form': form})
+# class FeedbackView(FormView):
+#     """Comment form with usage FormView class"""
+#     form_class = FeedbackForm
+#     template_name = 'feedback/index.html'
+#     success_url = 'done'
 #
-#     def post(self, request):
-#         form = FeedbackForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect('done/')
-#         else:
-#             return render(request, 'feedback/index.html', {'form': form})
-class FeedbackView(FormView):
+#     def form_valid(self, form):
+#         form.save()
+#         return super().form_valid(form)
+
+
+class FeedbackCreateView(CreateView):
+    model = Feedback
     form_class = FeedbackForm
     template_name = 'feedback/index.html'
-    success_url = '/done'
-
-    def form_valid(self, form):
-        form.save()
-        return super(FeedbackView, self).form_valid(form)
+    success_url = 'done'
 
 
-# class FeedbackUpdateView(View):
-#     def get(self, request, id_feedback):
-#         feed_obj = Feedback.objects.get(id=id_feedback)
-#         form = FeedbackForm(instance=feed_obj)
-#         return render(request, 'feedback/index.html', {'form': form})
-#
-#     def post(self, request, id_feedback):
-#         feed_obj = Feedback.objects.get(id=id_feedback)
-#         form = FeedbackForm(request.POST, instance=feed_obj)
-#         if form.is_valid():
-#             form.save()
-#             return HttpResponseRedirect(f'/{id_feedback}')
-#         else:
-#             return render(request, 'feedback/index.html', {'form': form})
 class FeedbackUpdateView(UpdateView):
     model = Feedback
     form_class = FeedbackForm
     template_name = 'feedback/index.html'
-    success_url = '/done'
+    success_url = '/feedbacks/done'
 
 
-
-class ListFeedback(ListView):
-    template_name = 'feedback/list_feedback.html'
+class FeedbackDetailView(DetailView):
     model = Feedback
+    template_name = 'feedback/detail.html'
+
+
+class FeedbackListView(ListView):
+    model = Feedback
+    template_name = 'feedback/list.html'
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        filter_qs = queryset.filter(rating__gte=3)
-        return filter_qs
+        """Changing default queryset with filters and/or order if needed"""
+        queryset = super().get_queryset().filter(Q(rating__gte=5)).order_by(F('name').asc(nulls_last=True))
+        return queryset
 
 
-# class OneFeedback(TemplateView):
-#     template_name = 'feedback/onefeedback.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         feedback = Feedback.objects.get(id=context['id_feedback'])
-#         context['feedback'] = feedback
-#         return context
-class DetailFeedback(DetailView):
-    template_name = 'feedback/onefeedback.html'
-    model = Feedback
-
-
-
-class FeedbackDoneView(TemplateView):
+class DoneView(TemplateView):
     template_name = 'feedback/done.html'
+
+    def get_context_data(self, **kwargs):
+        """Sending additional information if needed"""
+        context = super().get_context_data(**kwargs)
+        context['new_data'] = 'test'
+        return context

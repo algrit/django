@@ -5,24 +5,20 @@
 
 {% block content %}
 <h2>Leave your feedback</h2>
+
 <form method="post">
     {% csrf_token %}
-    <div class="form-style">
-        {% for field in form %}
-        {{ field.label_tag }}
-        {{ field.errors }}
-        {{ field }}
-        <br>
-        {% endfor %}
-    </div>
 
-    <button>Send</button>
-    <button type="reset">Reset</button>
+    {% for field in form %}
+    {{field.name|title}}:
+    {{field.errors}}
+    {{field}}
+    <br>
+    <br>
+    {% endfor %}
+    <input type="submit">
+
 </form>
 
-<form>
-    <div class="form-style">
-        <a href="{% url 'upload_img' %}">Upload Image</a>
-    </div>
-</form>
+
 {% endblock %}
