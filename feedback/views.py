@@ -1,7 +1,11 @@
+from rest_framework.viewsets import ModelViewSet
+
 from .forms import FeedbackForm
 from .models import Feedback
 from django.views.generic import TemplateView, FormView, CreateView, UpdateView, DetailView, ListView
 from django.db.models import Q, F
+
+from .serializers import FeedbackSerializer
 
 
 # class FeedbackView(FormView):
@@ -29,10 +33,13 @@ class FeedbackUpdateView(UpdateView):
     success_url = '/feedbacks/done'
 
 
-class FeedbackDetailView(DetailView):
-    model = Feedback
-    template_name = 'feedback/detail.html'
+# class FeedbackDetailView(DetailView):
+#     model = Feedback
+#     template_name = 'feedback/detail.html'
 
+class FeedbackDetailView(ModelViewSet):
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackSerializer
 
 class FeedbackListView(ListView):
     model = Feedback
